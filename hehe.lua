@@ -85,3 +85,55 @@ end
 
 elem.property(YES, "Update", YES_update)
 
+local PLST = elem.allocate("RO01", "PLST")
+elem.property(PLST, "Collision", 0)
+elem.property(PLST, "Name", "PLST")
+elem.property(PLST, "Hardness", 0)
+elem.property(PLST, "Color", 0x000000)
+elem.property(PLST, "Weight", 100)
+elem.property(PLST, "Description", "Plastic, Set Color with tmp, tmp2, and tmp3 for R,G,B")
+elem.property(PLST,"HighTemperature",199+273.15)
+
+local function PLST_update(i,x,y)
+    if sim.partProperty(i,"life") == 0 then
+        sim.partProperty(i,"life",math.random(1,25))
+    end
+end
+
+local function PLST_graphics(i)
+    life = sim.partProperty(i,"life")
+    mainr = sim.partProperty(i,"tmp")-(life/3)
+    maing = sim.partProperty(i,"tmp2")-(life/3)
+    mainb = sim.partProperty(i,"tmp3")-(life/3)
+    if mainr < 0 then
+        mainr = 0
+    end
+    if maing < 0 then
+        maing = 0
+    end
+    if mainb < 0 then
+        mainb = 0
+    end
+    return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+end
+
+elem.property(PLST, "Update", PLST_update)
+elem.property(PLST, "Graphics", PLST_graphics)
+
+
+local MPLS = elem.allocate("RO01","MPLS")
+elem.property(MPLS,"Name","MPLS")
+elem.property(MPLS,"Description","Melted Plastic")
+elem.property(MPLS,"Properties",elem.TYPE_LIQUID)
+elem.property(MPLS,"Flammable",1)
+elem.property(MPLS,"Falldown",2)
+elem.property(MPLS,"Graphics",PLST_graphics)
+elem.property(MPLS,"Advection",1)
+elem.property(MPLS,"Gravity",0.04)
+elem.property(MPLS,"Update", PLST_update)
+elem.property(MPLS,"Temperature",250+273.15)
+elem.property(MPLS,"LowTemperature",200+273.15)
+elem.property(MPLS,"LowTemperatureTransition",PLST)
+
+elem.property(PLST,"HighTemperatureTransition",MPLS)
+
