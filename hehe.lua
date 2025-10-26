@@ -72,6 +72,11 @@ local function YES_update(i,x,y)
     for j, nx, ny in sim.neighbours(x, y, 1, 1) do
         if sim.partProperty(j,"type") ~= YES then
             sim.partProperty(i,"type",sim.partProperty(j,"type"))
+            sim.partProperty(i,"ctype",sim.partProperty(j,"ctype"))
+            sim.partProperty(i,"tmp",sim.partProperty(j,"tmp"))
+            sim.partProperty(i,"tmp2",sim.partProperty(j,"tmp2"))
+            sim.partProperty(i,"tmp3",sim.partProperty(j,"tmp3"))
+            sim.partProperty(i,"tmp4",sim.partProperty(j,"tmp4"))
         end
     end
 end
