@@ -39,10 +39,10 @@ local function NYDM_update(i,x,y)
     end
     for j, nx, ny in sim.neighbours(x, y, 1, 1, elem.DEFAULT_PT_IRON) do
         if life > 64 then
-            sim.gravMap(x/4, y/4, -2)
+            sim.gravMap(nx/4, ny/4, -2)
         end
         if life < 64 then
-            sim.gravMap(x/4, y/4, 2)
+            sim.gravMap(nx/4, ny/4, 2)
         end
     end
     if life > 128 then
