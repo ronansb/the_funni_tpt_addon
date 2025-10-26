@@ -29,7 +29,7 @@ elem.property(NYDM, "Collision", 0)
 elem.property(NYDM, "Name", "NYDM")
 elem.property(NYDM, "Color", 0xC0C0C0)
 elem.property(NYDM, "Weight", 100)
-elem.property(NYDM, "Description", "Neodymium, Rusts on contact with Oxygen. Used with SPRK and IRON as a magnet.")
+elem.property(NYDM, "Description", "Neodymium, Rusts on contact with Oxygen. Used with IRON as a magnet. (Oxidized is negative-magnet)")
 
 local function NYDM_update(i,x,y)
     life = sim.partProperty(i,"life")
