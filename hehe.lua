@@ -37,6 +37,15 @@ local function NYDM_update(i,x,y)
         sim.partProperty(i,"life",life+2)
         sim.partKill(j)
     end
+    if life > 63 then
+       sim.partProperty(i,"life",63) 
+    end
+end
 
+local function NYDM_graphics(i,mainr, maing, mainb)
+    local life = sim.partProperty(i, "life")
+    mainr = mainr+life
+    return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
 end
 elem.property(NYDM, "Update", NYDM_update)
+elem.property(NYDM, "Graphics", NYDM_graphics)
