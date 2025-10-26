@@ -78,6 +78,7 @@ local function YES_update(i,x,y)
             sim.partProperty(i,"tmp3",sim.partProperty(j,"tmp3"))
             sim.partProperty(i,"tmp4",sim.partProperty(j,"tmp4"))
             sim.partProperty(i,"temp",sim.partProperty(j,"temp"))
+            sim.partProperty(i,"life",sim.partProperty(j,"life"))
         end
     end
 end
