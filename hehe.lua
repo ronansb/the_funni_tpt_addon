@@ -35,7 +35,7 @@ local function NYDM_update(i,x,y)
     life = sim.partProperty(i,"life")
     for j, nx, ny in sim.neighbours(x, y, 1, 1) do
         neighType = sim.partProperty(j, "type")
-        if neighType == DEFAULT_PT_OXYG then
+        if neighType == elem.DEFAULT_PT_OXYG then
             sim.partProperty(i,"life",life+1)
             sim.partKill(j)
         end
