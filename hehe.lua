@@ -37,8 +37,8 @@ local function NYDM_update(i,x,y)
         sim.partProperty(i,"life",life+2)
         sim.partKill(j)
     end
-    if life > 63 then
-       sim.partProperty(i,"life",63) 
+    if life > 127 then
+       sim.partProperty(i,"life",127) 
     end
 end
 
