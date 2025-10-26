@@ -58,3 +58,21 @@ local function NYDM_graphics(i,mainr, maing, mainb)
 end
 elem.property(NYDM, "Update", NYDM_update)
 elem.property(NYDM, "Graphics", NYDM_graphics)
+
+
+local YES = elem.allocate("RO01", "YES")
+elem.property(YES, "Collision", 0)
+elem.property(YES, "Name", "YES")
+elem.property(YES, "Color", 0xFFFFFF)
+elem.property(YES, "Weight", 100)
+elem.property(YES, "Description", "Y E S (turns into whatever it touches)")
+
+local function YES_update(i,x,y)
+    life = sim.partProperty(i,"life")
+    for j, nx, ny in sim.neighbours(x, y, 1, 1) do
+        sim.partProperty(i,"type",sim.partProperty(j,"type"))
+    end
+end
+
+elem.property(YES, "Update", YES_update)
+
