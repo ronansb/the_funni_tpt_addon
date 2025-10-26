@@ -70,7 +70,9 @@ elem.property(YES, "Description", "Y E S (turns into whatever it touches)")
 local function YES_update(i,x,y)
     life = sim.partProperty(i,"life")
     for j, nx, ny in sim.neighbours(x, y, 1, 1) do
-        sim.partProperty(i,"type",sim.partProperty(j,"type"))
+        if sim.partProperty(j,"type") ~= YES then
+            sim.partProperty(i,"type",sim.partProperty(j,"type"))
+        end
     end
 end
 
