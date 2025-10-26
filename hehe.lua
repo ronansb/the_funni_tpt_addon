@@ -37,8 +37,16 @@ local function NYDM_update(i,x,y)
         sim.partProperty(i,"life",life+2)
         sim.partKill(j)
     end
-    if life > 127 then
-       sim.partProperty(i,"life",127) 
+    for j, nx, ny in sim.neighbours(x, y, 1, 1, elem.DEFAULT_PT_IRON) do
+        if life > 64 then
+            sim.gravMap(x/4, y/4, -2)
+        end
+        if life < 64 then
+            sim.gravMap(x/4, y/4, 2)
+        end
+    end
+    if life > 128 then
+       sim.partProperty(i,"life",128) 
     end
 end
 
