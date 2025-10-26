@@ -33,7 +33,7 @@ elem.property(NYDM, "Description", "Neodymium, Rusts on contact with Oxygen. Use
 
 local function NYDM_update(i,x,y)
     life = sim.partProperty(i,"life")
-    for j, nx, ny in sim.neighbours(x, y, 1, 1, MGMT) do
+    for j, nx, ny in sim.neighbours(x, y, 1, 1, elem.DEFAULT_PT_OXYG) do
         sim.partProperty(j,"type",elem.DEFAULT_PT_FILT)
     end
 
