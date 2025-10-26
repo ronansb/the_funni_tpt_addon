@@ -45,6 +45,7 @@ end
 local function NYDM_graphics(i,mainr, maing, mainb)
     local life = sim.partProperty(i, "life")
     mainr = mainr+life
+    mainb = mainr+life
     return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
 end
 elem.property(NYDM, "Update", NYDM_update)
