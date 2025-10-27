@@ -45,6 +45,15 @@ local function NYDM_update(i,x,y)
             sim.gravMap(nx/4, ny/4, 2)
         end
     end
+
+    for j, nx, ny in sim.neighbours(x, y, 1, 1, elem.DEFAULT_PT_TTAN) do
+        if life > 64 then
+            sim.gravMap(nx/4, ny/4, -6)
+        end
+        if life < 64 then
+            sim.gravMap(nx/4, ny/4, 6)
+        end
+    end
     if life > 128 then
        sim.partProperty(i,"life",128) 
     end
@@ -52,12 +61,37 @@ end
 
 local function NYDM_graphics(i,mainr, maing, mainb)
     local life = sim.partProperty(i, "life")
+    local temp = sim.partProperty(i, "temp")
     mainr = mainr+life
     mainb = mainr+life
-    return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+    if temp > 120+273.15 and temp < 350+273.15 and temp < 1200+273.15 then
+        if math.random(0,((350+273.15)-temp)/2) == 1 then
+            mainr = mainr + (350+273.15)-(900+273.15)/2
+            maing = maing + (350+273.15)-(900+273.15)/8
+            mainb = mainb + ((350+273.15)-(900+273.15))/10
+            return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+        else
+            return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+        end
+    elseif temp > 350+273.15 and temp < 1200+273.15 then
+        mainr = mainr + temp-(900+273.15)/2
+        maing = maing + temp-(900+273.15)/8
+        mainb = mainb + (temp-(900+273.15))/10
+        return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+    elseif temp > 1200+273.15 then
+        mainr = mainr + temp-(900+273.15)/5
+        maing = maing + temp-(900+273.15)/5
+        mainb = mainb + (temp-(900+273.15))/10
+        return 0,ren.PMODE_FLAT+ren.PMODE_GLOW,255,mainr,maing,mainb,0,0,0,0
+    else
+        return 0,ren.PMODE_FLAT,255,mainr,maing,mainb,0,0,0,0
+    end
 end
 elem.property(NYDM, "Update", NYDM_update)
 elem.property(NYDM, "Graphics", NYDM_graphics)
+elem.property(NYDM, "HighTemperature", 2900+273.15)
+elem.property(NYDM, "HighTemperatureTransition", elem.DEFAULT_PT_LAVA)
+elem.property(NYDM, "Properties", elem.TYPE_SOLID)
 
 
 local YES = elem.allocate("RO01", "YES")
@@ -89,7 +123,7 @@ local PLST = elem.allocate("RO01", "PLST")
 elem.property(PLST, "Collision", 0)
 elem.property(PLST, "Name", "PLST")
 elem.property(PLST, "Hardness", 0)
-elem.property(PLST, "Color", 0x000000)
+elem.property(PLST, "Color", 0xFFFFFF)
 elem.property(PLST, "Weight", 100)
 elem.property(PLST, "Description", "Plastic, Set Color with tmp, tmp2, and tmp3 for R,G,B")
 elem.property(PLST,"HighTemperature",199+273.15)
@@ -119,7 +153,7 @@ end
 
 elem.property(PLST, "Update", PLST_update)
 elem.property(PLST, "Graphics", PLST_graphics)
-
+elem.property(PLST, "Properties", elem.TYPE_SOLID)
 
 local MPLS = elem.allocate("RO01","MPLS")
 elem.property(MPLS,"Name","MPLS")
@@ -134,6 +168,4 @@ elem.property(MPLS,"Update", PLST_update)
 elem.property(MPLS,"Temperature",250+273.15)
 elem.property(MPLS,"LowTemperature",200+273.15)
 elem.property(MPLS,"LowTemperatureTransition",PLST)
-
 elem.property(PLST,"HighTemperatureTransition",MPLS)
-
